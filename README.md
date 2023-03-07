@@ -4,7 +4,7 @@ The aim of this project is to generate maps of walls (o) and free cases (.), the
 
 Usage:
 
-      ./bsq [number] "..o..o."           \with the generator\
+      ./bsq [number] "..o..o."                         \with the generator\
                   (random pattern)
 
-      ./bsq map.txt                      \with a created map\
+      ./bsq [path to the map.txt]                      \with a created map\
