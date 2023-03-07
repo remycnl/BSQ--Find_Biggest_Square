@@ -5,4 +5,5 @@ Usage:
 
 ./bsq [number] "..o..o."           \with the generator\
               (random pattern)
+              
 ./bsq map.txt                      \with a created map\
