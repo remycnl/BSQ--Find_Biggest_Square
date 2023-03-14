@@ -6,7 +6,7 @@ The aim of this project is to generate maps of walls 'o' and free cases '.', the
 
 Compilation via Makefile
 
-      make                                             # compile all the files .c
+      make                                             # compile all the files .c and create the executable file
       
       make clean                                       # remove all the files .o
       
