@@ -1,0 +1,62 @@
+name: Chocolatine
+
+on:
+  push:
+    branches-ignore:
+      - 'ga-ignore-*'
+  pull_request:
+    branches-ignore:
+      - 'ga-ignore-*'
+
+env:
+  MIRROR_URL: git@github.com:remycnl/Chocolatine.git
+  EXECUTABLES: bsq
+
+jobs:
+  check_coding_style:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Check coding style
+        uses: docker://ghcr.io/epitech/coding-style-checker:latest
+        with:
+          args: check.sh $(pwd) $(pwd)
+
+  check_program_compilation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build program
+        run: make
+      - name: Clean up
+        run: make clean
+      - name: Check executables
+        run: |
+          for exe in $(echo "$EXECUTABLES" | tr "," "\n"); do
+            test -x "$exe" || exit 1
+          done
+
+  run_tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: make tests_run
+
+  push_to_mirror:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Mirror to repository
+        uses: pixta-dev/repository-mirroring-action@v1.0.0
+        with:
+          src: .
+          dst: git@github.com:remycnl/Chocolatine.git
+          ssh_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
