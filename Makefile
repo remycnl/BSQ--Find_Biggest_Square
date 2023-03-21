@@ -42,4 +42,4 @@ fclean: clean
 re: fclean all
 
 tests_run:
-    ./bsq
+	./bsq
