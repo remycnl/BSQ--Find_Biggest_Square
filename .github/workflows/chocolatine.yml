@@ -1,3 +1,13 @@
+name: Chocolatine
+
+on:
+  push:
+    branches-ignore:
+      - 'ga-ignore-*'
+  pull_request:
+    branches-ignore:
+      - 'ga-ignore-*'
+
 env:
   MIRROR_URL: git@github.com:remycnl/Chocolatine.git
   EXECUTABLES: bsq
