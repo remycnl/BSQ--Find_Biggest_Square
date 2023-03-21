@@ -42,4 +42,4 @@ fclean: clean
 re: fclean all
 
 tests_run:
-	./bsq
+	./bsq maps-intermediate/mouli_maps/intermediate_map_100_100
