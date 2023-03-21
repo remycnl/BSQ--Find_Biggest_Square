@@ -54,7 +54,9 @@ int test_generate_map (char **av, int ac)
 
 int main (int ac, char **av)
 {
-    if (ac == 2 || ac == 3) {
+    
+    if (ac == 2 || ac == 3) 
+    {
         if (test_read_map(av, ac) == 84) {
             return (84);
         }
