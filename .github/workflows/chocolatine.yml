@@ -1,13 +1,3 @@
-name: Chocolatine
-
-on:
-  push:
-    branches-ignore:
-      - 'ga-ignore-*'
-  pull_request:
-    branches-ignore:
-      - 'ga-ignore-*'
-
 env:
   MIRROR_URL: git@github.com:remycnl/Chocolatine.git
   EXECUTABLES: bsq
@@ -15,48 +5,77 @@ env:
 jobs:
   check_coding_style:
     runs-on: ubuntu-latest
+    container: ghcr.io/epitech/coding-style-checker:latest
+    needs: []
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Check coding style
-        uses: docker://ghcr.io/epitech/coding-style-checker:latest
+        run: check.sh $(pwd) $(pwd)
+        continue-on-error: true
+      - name: Show annotations
+        if: ${{ job.status == 'failure' }}
+        uses: peter-evans/create-pull-request@v3.10.0
         with:
-          args: check.sh $(pwd) $(pwd)
+          commit-message: 'Coding style errors found'
+          title: 'Coding style errors found'
+          body: 'The following coding style errors were found in your code:'
+          labels: 'bug'
+          annotations: ${{ toJson(steps.display_annotations.outputs.annotations) }}
+      - name: Fail job on error
+        if: ${{ job.status == 'failure' }}
+        run: exit 1
+      - name: Display annotations
+        id: display_annotations
+        if: ${{ job.status == 'failure' }}
+        run: |
+          cat checkstyle.xml | reviewdog -f=checkstyle -reporter=github-pr-review
 
   check_program_compilation:
     runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    needs: [check_coding_style]
     timeout-minutes: 3
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Build program
+      - name: Make
         run: make
-      - name: Clean up
+      - name: Make clean
         run: make clean
       - name: Check executables
         run: |
-          for exe in $(echo "$EXECUTABLES" | tr "," "\n"); do
-            test -x "$exe" || exit 1
+          IFS=',' read -ra EXECS <<< "$EXECUTABLES"
+          for EXEC in "${EXECS[@]}"; do
+            if [ ! -x "$EXEC" ]; then
+              echo "Executable $EXEC not found or not executable"
+              exit 1
+            fi
           done
 
   run_tests:
     runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    needs: [check_program_compilation]
     timeout-minutes: 3
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Run tests
+      - name: Make tests
         run: make tests_run
 
   push_to_mirror:
-    if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    needs: [run_tests]
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Mirror to repository
-        uses: pixta-dev/repository-mirroring-action@v1.0.0
         with:
-          src: .
-          dst: git@github.com:remycnl/Chocolatine.git
-          ssh_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
+          fetch-depth: 0
+      - name: Mirror to Epitech repository
+        uses: pixta-dev/repository-mirroring-action@v1.1.0
+        with:
+          src_url: '.'
+          dst_url: git@github.com:remycnl/Chocolatine.git
+          ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
