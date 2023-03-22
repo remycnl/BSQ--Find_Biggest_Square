@@ -86,6 +86,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
       - name: Mirror to repository
-        uses: pixta-dev/repository-mirroring-action@v1.3.3
+        uses: pixta-dev/repository-mirroring-action@v1.5.1
         with:
           repository: git@github.com:remycnl/Chocolatine.git
