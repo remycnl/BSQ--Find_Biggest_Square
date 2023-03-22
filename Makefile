@@ -41,5 +41,5 @@ fclean: clean
 
 re: fclean all
 
-tests_run:
-	./bsq maps-intermediate/mouli_maps/intermediate_map_100_100
+tests_run: $(NAME)
+	./$(NAME) maps-intermediate/mouli_maps/intermediate_map_100_100
