@@ -95,6 +95,5 @@ int main (int ac, char **av)
         my_putstr("Incorrect number of arguments : ");
         my_putstr("2 or 3 arguments expected\n");
         my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
         
 }
