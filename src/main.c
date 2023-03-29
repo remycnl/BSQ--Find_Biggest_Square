@@ -68,4 +68,33 @@ int main (int ac, char **av)
         return (84);
     }
     return (0);
+    my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        my_putstr("Incorrect number of arguments : ");
+        my_putstr("2 or 3 arguments expected\n");
+        
 }
