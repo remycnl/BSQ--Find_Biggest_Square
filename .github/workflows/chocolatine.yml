@@ -84,7 +84,7 @@ jobs:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.0
         with:
-          ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
+          ssh-private-key: secrets.GIT_SSH_PRIVATE_KEY
       - name: Mirror to repository
         uses: pixta-dev/repository-mirroring-action@v1
         with:
