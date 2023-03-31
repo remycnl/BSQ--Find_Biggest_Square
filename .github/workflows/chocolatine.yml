@@ -16,40 +16,45 @@ jobs:
   check_coding_style:
     runs-on: ubuntu-latest
     container: ghcr.io/epitech/coding-style-checker:latest
-    needs: []
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Check coding style
-        run: check.sh $(pwd) $(pwd)
-        continue-on-error: true
-      - name: Show errors
-        if: ${{ job.status == 'failure' }}
-        uses: peter-evans/create-pull-request@v3.10.0
-        with:
-          commit-message: 'Coding style errors found'
-          title: 'Coding style errors found'
-          body: 'The following coding style errors were found in your code:'
-          labels: 'bug'
-          annotations: ${{ toJson(steps.display_annotations.outputs.annotations) }}
-      - name: Fail job on error
-        if: ${{ job.status == 'failure' }}
-        run: exit 1
-      - name: Display errors
-        id: display_annotations
-        if: ${{ job.status == 'failure' }}
         run: |
-          cat checkstyle.xml | reviewdog -f=checkstyle -reporter=github-pr-review
+          check.sh $(pwd) $(pwd)
+          if [-s coding-style-report.log];
+            then 
+            exit 1;
+          fi;
+          exit 0;
+      #   continue-on-error: true
+      # - name: Find errors
+      #   if: ${{ job.status == 'failure' }}
+      #   uses: peter-evans/create-pull-request@v3.10.0
+      #   with:
+      #     commit-message: 'Coding style errors found'
+      #     title: 'Coding style errors found'
+      #     body: 'The following coding style errors were found in your code:'
+      #     labels: 'bug'
+      #     annotations: ${{ toJson(steps.display_annotations.outputs.annotations) }}
+      # - name: Fail job on error
+      #   if: ${{ job.status == 'failure' }}
+      #   run: exit 1
+      # - name: Display errors
+      #   id: display_annotations
+      #   if: ${{ job.status == 'failure' }}
+      #   run: |
+      #     cat checkstyle.xml | reviewdog -f=checkstyle -reporter=github-pr-review
 
   check_program_compilation:
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
     needs: [check_coding_style]
-    timeout-minutes: 2
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Compile program
+        timeout-minutes: 2
         run: make
       - name: Clean build artifacts
         run: make clean
@@ -67,11 +72,11 @@ jobs:
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
     needs: [check_program_compilation]
-    timeout-minutes: 2
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run tests
+        timeout-minutes: 2
         run: make tests_run
 
   push_to_mirror:
@@ -80,12 +85,13 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.7.0
+        uses: actions/checkout@v3
         with:
-          ssh-private-key: secrets.GIT_SSH_PRIVATE_KEY
+          fetch-depth: 0
       - name: Mirror to repository
         uses: pixta-dev/repository-mirroring-action@v1
         with:
-          repository: git@github.com:remycnl/Chocolatine.git
+          target_repo_url:
+          git@github.com:remycnl/Chocolatine.git
+        ssh_private_key:
+          ${{secrets.GIT_SSH_PRIVATE_KEY}}
