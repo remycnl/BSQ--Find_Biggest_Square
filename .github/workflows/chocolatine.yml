@@ -22,9 +22,9 @@ jobs:
       - name: Check coding style
         run: |
           check.sh $(pwd) $(pwd);
-          if [ -s coding-style-report.log ];
+          if [ -s coding-style-reports.log ];
             then 
-            exit 1;
+              exit 1;
           fi;
           exit 0;
       #   continue-on-error: true
