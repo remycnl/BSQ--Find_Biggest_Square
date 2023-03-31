@@ -54,7 +54,6 @@ int test_generate_map (char **av, int ac)
 
 int main (int ac, char **av)
 {
-    
     if (ac == 2 || ac == 3) {
         if (test_read_map(av, ac) == 84) {
             return (84);
@@ -63,30 +62,6 @@ int main (int ac, char **av)
             return (84);
         }
     } else {
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
-        my_putstr("Incorrect number of arguments : ");
-        my_putstr("2 or 3 arguments expected\n");
         my_putstr("Incorrect number of arguments : ");
         my_putstr("2 or 3 arguments expected\n");
         return (84);
