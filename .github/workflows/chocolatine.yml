@@ -24,10 +24,11 @@ jobs:
           check.sh $(pwd) $(pwd);
           if [ -s coding-style-reports.log ];
             then 
-              echo "Errors coding style:";
+              echo "CODING STYLE ERRORS:";
               cat coding-style-reports.log;
               exit 1;
           fi;
+          echo "No coding style errors.";
           exit 0;
 
   check_program_compilation:
