@@ -26,7 +26,6 @@ jobs:
             then 
               echo "CODING STYLE ERRORS:";
               cat coding-style-reports.log;
-              echo "\n";
               exit 1;
           fi;
           echo "No coding style errors.";
