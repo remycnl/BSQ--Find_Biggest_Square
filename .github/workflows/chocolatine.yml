@@ -24,6 +24,8 @@ jobs:
           check.sh $(pwd) $(pwd);
           if [ -s coding-style-reports.log ];
             then 
+              echo "Errors coding style:";
+              cat coding-style-reports.log;
               exit 1;
           fi;
           exit 0;
