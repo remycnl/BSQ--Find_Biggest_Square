@@ -40,6 +40,3 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
-tests_run: $(NAME)
-	./$(NAME) maps-intermediate/mouli_maps/intermediate_map_100_100
